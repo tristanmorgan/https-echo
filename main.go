@@ -25,7 +25,7 @@ var (
 
 func redirect(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Server", "Https-echo/"+Version+" (+"+Homepage+")")
-	if "/health" == req.URL.Path {
+	if req.URL.Path == "/health" {
 		io.WriteString(w, "Healthy.\n")
 		return
 	}
