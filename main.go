@@ -9,6 +9,8 @@ import (
 	"os"
 	"runtime"
 	"strings"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 // Version number constant.
@@ -56,7 +58,10 @@ func main() {
 	}
 
 	log.Printf("Listening for incoming requests on TCP port '%s'...", *httpAddr)
-	err := http.ListenAndServe(*httpAddr, http.HandlerFunc(redirect))
+	http.HandleFunc("/", redirect)
+	http.Handle("/metrics", promhttp.Handler())
+
+	err := http.ListenAndServe(*httpAddr, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
