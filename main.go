@@ -12,10 +12,10 @@ import (
 )
 
 // Version number constant.
-const Version = "0.0.6"
+const Version = "0.0.7"
 
 // Homepage url.
-const Homepage = "https://github.com/servian/https-echo"
+const Homepage = "https://github.com/tristanmorgan/https-echo"
 
 var (
 	httpAddr = flag.String("listen", ":80", "Listen address")

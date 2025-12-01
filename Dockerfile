@@ -2,26 +2,21 @@
 # Builder
 #
 FROM golang:alpine AS builder
-LABEL maintainer="Tristan Morgan <tristan.morgan@servian.com>"
 
-WORKDIR /go/src/github.com/servian/https-echo/
+WORKDIR /go/src/github.com/tristanmorgan/https-echo/
 
 COPY . .
 
 ARG LD_FLAGS="-s -w"
 ENV LD_FLAGS="${LD_FLAGS}"
 
-RUN \
-  CGO_ENABLED="0" \
-  GOOS="linux" \
-  GOARCH="amd64" \
-  go build -a -o "/https-echo" -ldflags "${LD_FLAGS}"
+RUN CGO_ENABLED="0" go build -v -a -trimpath -o "/https-echo" -ldflags "${LD_FLAGS}"
 
 #
 # Final
 #
 FROM scratch
-LABEL maintainer="Tristan Morgan <tristan.morgan@servian.com>"
+LABEL maintainer="Tristan Morgan <tristan.morgan@hashicorp.com>"
 LABEL Description="HTTPS_ECHO, echo url and redirect http to https"
 EXPOSE 80
 WORKDIR /

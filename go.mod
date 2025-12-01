@@ -1,3 +1,3 @@
-module github.com/servian/https-echo
+module github.com/tristanmorgan/https-echo
 
-go 1.12
+go 1.25
