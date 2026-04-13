@@ -10,6 +10,8 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/collectors/version"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
@@ -51,6 +53,7 @@ func redirect(w http.ResponseWriter, req *http.Request) {
 func main() {
 	flag.Parse()
 
+	prometheus.MustRegister(version.NewCollector("https-echo"))
 	if *versDisp {
 		fmt.Printf("Version: v%s %s\n", Version, runtime.Version())
 		fmt.Printf("Home Page: %s\n", Homepage)

@@ -10,13 +10,13 @@ COPY . .
 ARG LD_FLAGS="-s -w"
 ENV LD_FLAGS="${LD_FLAGS}"
 
-RUN CGO_ENABLED="0" go build -v -a -trimpath -o "/https-echo" -ldflags "${LD_FLAGS}"
+RUN CGO_ENABLED="0" go build -v -a -trimpath -o "/https-echo" -ldflags "${LD_FLAGS}" -tags nethttpomithttp2
 
 #
 # Final
 #
 FROM scratch
-LABEL maintainer="Tristan Morgan <tristan.morgan@hashicorp.com>"
+LABEL maintainer="Tristan Morgan <tristan.morgan@gmail.com>"
 LABEL Description="HTTPS_ECHO, echo url and redirect http to https"
 EXPOSE 80
 WORKDIR /
