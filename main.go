@@ -22,16 +22,16 @@ const Version = "0.0.7"
 const Homepage = "https://github.com/tristanmorgan/https-echo"
 
 var (
-	httpAddr = flag.String("listen", ":80", "Listen address")
-	destPort = flag.Int("port", -1, "Destination port")
-	versDisp = flag.Bool("version", false, "Display version")
+	httpAddr  = flag.String("listen", ":80", "Listen address")
+	destPort  = flag.Int("port", -1, "Destination port")
+	versDisp  = flag.Bool("version", false, "Display version")
+	stsEnable = flag.Bool("sts", true, "Strict-Transport-Security header enable")
 )
 
 func redirect(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Server", "Https-echo/"+Version+" (+"+Homepage+")")
-	if req.URL.Path == "/health" {
-		io.WriteString(w, "Healthy.\n")
-		return
+	if *stsEnable {
+		w.Header().Set("Strict-Transport-Security", "max-age=31536000")
 	}
 	hostname := strings.Split(req.Host, ":")
 	dps := ""
@@ -50,6 +50,11 @@ func redirect(w http.ResponseWriter, req *http.Request) {
 	http.Redirect(w, req, target, http.StatusTemporaryRedirect)
 }
 
+func health(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Server", "Https-echo/"+Version+" (+"+Homepage+")")
+	io.WriteString(w, "Healthy.\n")
+}
+
 func main() {
 	flag.Parse()
 
@@ -62,6 +67,7 @@ func main() {
 
 	log.Printf("Listening for incoming requests on TCP port '%s'...", *httpAddr)
 	http.HandleFunc("/", redirect)
+	http.HandleFunc("/health", health)
 	http.Handle("/metrics", promhttp.Handler())
 
 	err := http.ListenAndServe(*httpAddr, nil)
