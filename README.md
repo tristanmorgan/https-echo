@@ -2,7 +2,7 @@
 
 ## Echo the requested url and redirect to HTTPS
 
-[![Docker Image](https://img.shields.io/badge/docker-vibrato%2Fhttps--echo-blue.svg)](https://hub.docker.com/r/vibrato/https-echo/)
+[![Docker Image](https://img.shields.io/badge/docker-tristanmorgan%2Fhttps--echo-blue.svg)](https://hub.docker.com/r/tristanmorgan/https-echo/)
 [![Go Report](https://goreportcard.com/badge/github.com/tristanmorgan/https-echo)](https://goreportcard.com/report/github.com/tristanmorgan/https-echo)
 [![Release](https://img.shields.io/github/release/tristanmorgan/https-echo.svg)](https://github.com/tristanmorgan/https-echo/releases/latest)
 
