@@ -16,7 +16,7 @@ import (
 )
 
 // Version number constant.
-const Version = "0.0.7"
+const Version = "0.0.8"
 
 // Homepage url.
 const Homepage = "https://github.com/tristanmorgan/https-echo"
